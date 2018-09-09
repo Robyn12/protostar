@@ -1,2 +1,3 @@
 # protostar
-exploit-exercices
+exploit-exercises
+This is repository for exploit-exercises.com challenges
