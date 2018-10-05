@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import re
 from pwn import *
 
 def up(bString):
